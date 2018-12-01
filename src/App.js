@@ -39,20 +39,21 @@ toggleManual(event) {
 handleTab(event) {
   if (event.keyCode === 9) {
     event.preventDefault();
-    if (this.state.tab){
-      this.setState({
-        field: "level",
-        tab: !this.state.tab
-      })
-      this.levelInput.focus()
-    } else {
-      this.setState({
-        field: "dxcode",
-        tab: !this.state.tab
-      })
-      this.dxCodeInput.focus()
+    if (!this.state.manual) {
+      if (this.state.tab){
+        this.setState({
+          field: "level",
+          tab: !this.state.tab
+        })
+        this.levelInput.focus()
+      } else {
+        this.setState({
+          field: "dxcode",
+          tab: !this.state.tab
+        })
+        this.dxCodeInput.focus()
+      }
     }
-    
   }
 }
 
@@ -77,11 +78,11 @@ handleTab(event) {
           <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
             <form>
               <div className="input-holder">
-                <label for="level">RESPONSE:</label><br></br>
+                <h2>RESPONSE:</h2>
                 <input type="text" name="level" ref={(input) => { this.levelInput = input; }} />
               </div>
               <div className="input-holder">
-                <label for="dxCode">DX CODE:</label><br></br>
+                <h2>DX CODE:</h2>
                 <input type="text" name="dxCode" ref={(input) => { this.dxCodeInput = input; }} />
               </div>
             </form>

@@ -6,7 +6,8 @@
 .call-container{
   border: 2px solid #333333;
   background-color: #999999;
-  border-radius: 4px;  
+  border-radius: 4px;
+  margin: 0px 20px 0 20px;  
 }
 
 
