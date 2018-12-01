@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Manual from './Manual'
+import Manual from '../manual/Manual'
 import './App.css';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
+import Page from './Page'
+import './Manual.css';
 import Grid from '@material-ui/core/Grid';
 
 
@@ -11,11 +12,9 @@ class Manual extends Component {
     
   render() {
     return (
-      <div>
-        test
-      </div>
+      <Page />
     );
-    }
+  }
 }
 
 
