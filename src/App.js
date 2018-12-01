@@ -17,6 +17,7 @@ class App extends Component {
   }
 
 componentDidMount(){
+  this.levelInput.focus()
   document.addEventListener("keydown", this.handleTab, false)
   document.addEventListener("keydown", this.toggleManual, false)
 }
@@ -74,12 +75,16 @@ handleTab(event) {
             </div>
           </Grid>
           <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
-            <div>{this.state.field}</div>
             <form>
-              <input type="text" name="level" ref={(input) => { this.levelInput = input; }} /><br></br>
-              <input type="text" name="dxCode" ref={(input) => { this.dxCodeInput = input; }} />
+              <div className="input-holder">
+                <label for="level">RESPONSE:</label><br></br>
+                <input type="text" name="level" ref={(input) => { this.levelInput = input; }} />
+              </div>
+              <div className="input-holder">
+                <label for="dxCode">DX CODE:</label><br></br>
+                <input type="text" name="dxCode" ref={(input) => { this.dxCodeInput = input; }} />
+              </div>
             </form>
-            <div>{this.state.manual ? "open" : "closed" }</div>
           </Grid>
         </Grid>
         { this.state.manual ? <div className="popup"><div className="popup-inner">test popup</div></div> : null }
