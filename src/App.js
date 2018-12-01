@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Manual from './Manual'
 import './App.css';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
@@ -88,7 +89,7 @@ handleTab(event) {
             </form>
           </Grid>
         </Grid>
-        { this.state.manual ? <div className="popup"><div className="popup-inner">test popup</div></div> : null }
+        { this.state.manual ? <div className="popup"><div className="popup-inner"><Manual /></div></div> : null }
       </div>
     );
   }
