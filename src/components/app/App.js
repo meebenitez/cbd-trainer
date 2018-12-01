@@ -62,6 +62,7 @@ handleTab(event) {
 
 
   render() {
+    console.log(this.props.currentCall)
     return (
       <div>
         <Grid container spacing={24} style={{padding: 6}}>
@@ -80,11 +81,11 @@ handleTab(event) {
             <form>
               <div className="input-holder">
                 <h2>RESPONSE:</h2>
-                <input type="text" name="level" ref={(input) => { this.levelInput = input; }} />
+                <input type="text" name="level" style={{ textTransform: 'uppercase' }} ref={(input) => { this.levelInput = input; }} />
               </div>
               <div className="input-holder">
                 <h2>DX CODE:</h2>
-                <input type="text" name="dxCode" ref={(input) => { this.dxCodeInput = input; }} />
+                <input type="text" name="dxCode" style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
               </div>
             </form>
           </Grid>
@@ -97,11 +98,15 @@ handleTab(event) {
 
 const mapStateToProps= state => {
   return {
-    test: state.test,
     currentCall: state.currentCall,
-    openManual: state.openManual,
-    dxCode: state.dxCode,
-    result: state.result
+    result: state.result,
+    timeLeft: state.timeLeft,
+    inProgress: state.inProgress,
+    score: state.score,
+    totalCorrect: state.totalCorrect,
+    totalWrong: state.totalWrong,
+    times: state.times,
+    avgTime: state.avgTime,
   };
 }
 

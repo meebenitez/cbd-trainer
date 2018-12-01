@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Manual.css';
-import Grid from '@material-ui/core/Grid';
 import Select from 'react-select';
 
 const pages = [

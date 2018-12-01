@@ -1,16 +1,29 @@
 
 
 const initialState = {
-    test: "test",
-    currentCall: "lskdjflskjdflksjdlfkjsdlkj",
+    currentCall: "",
     openManual: false,
     dxCode: "test",
-    result: "fail"
+    result: "fail",
+    timeLeft: 0,
+    inProgress: false,
+    score: 0,
+    totalCorrect: 0,
+    totalWrong: 0,
+    times: [],
+    avgTime: 0,
 }
 
 
 const CALLS = {
-    call: "testlksjdlfkjsldkjflsdkjflkjsdlkfj"
+    callOne: {
+        details: ["21 y/o Male", "complaining of chest pain"],
+        result: {response: "BLS", code: "7R1"}
+        },
+    callTwo: {
+        details: ["21 y/o Male", "complaining of chest pain"],
+        result: {response: "BLS", code: "7R1"}
+    }
 }
 
 
@@ -31,7 +44,6 @@ const reducer = (state = initialState, action) => {
             ...state,
             result: "pass"
         }
-    
     default:
         return state;
     }    
