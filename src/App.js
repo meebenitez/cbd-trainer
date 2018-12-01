@@ -31,11 +31,13 @@ handleTab(event) {
         field: "level",
         tab: !this.state.tab
       })
+      this.levelInput.focus()
     } else {
       this.setState({
         field: "dxcode",
         tab: !this.state.tab
       })
+      this.dxCodeInput.focus()
     }
     
   }
@@ -62,8 +64,8 @@ handleTab(event) {
           <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
             <div>{this.state.field}</div>
             <form>
-              <input type="text" name="level" ref="level " /><br></br>
-              <input type="text" name="dxCode" ref="dxCode" />
+              <input type="text" name="level" ref={(input) => { this.levelInput = input; }} /><br></br>
+              <input type="text" name="dxCode" ref={(input) => { this.dxCodeInput = input; }} />
             </form>
           </Grid>
         </Grid>
