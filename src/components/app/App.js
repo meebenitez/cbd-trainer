@@ -33,6 +33,10 @@ toggleManual(event) {
     event.preventDefault();
     this.setState({
       manual: !this.state.manual
+    }, () => {
+      if (!this.state.manual) {
+        this.levelInput.focus()
+      }
     })
   }
 }
@@ -74,7 +78,7 @@ handleTab(event) {
           </Grid>
           <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
             <div className="call-container">
-              <span onClick={this.props.changeTest} className="text-center">{this.props.currentCall}</span>
+              <span onClick={this.props.changeTest} className="text-center">Call Details:</span>
             </div>
           </Grid>
           <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
