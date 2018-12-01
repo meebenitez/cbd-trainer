@@ -9,21 +9,33 @@ class App extends Component {
     super();
     this.state = {
       tab: false,
-      field: "none"
+      field: "none",
+      manual: false
     }
     this.handleTab = this.handleTab.bind(this)
+    this.toggleManual = this.toggleManual.bind(this)
   }
 
 componentDidMount(){
   document.addEventListener("keydown", this.handleTab, false)
+  document.addEventListener("keydown", this.toggleManual, false)
 }
 componentWillUnmount(){
   document.removeEventListener("keydown", this.handleTab)
+  document.removeEventListener("keydown", this.toggleManual)
 }
 
 
+toggleManual(event) {
+  if (event.keyCode === 32) {
+    event.preventDefault();
+    this.setState({
+      manual: !this.state.manual
+    })
+  }
+}
+
 handleTab(event) {
-  
   if (event.keyCode === 9) {
     event.preventDefault();
     if (this.state.tab){
@@ -67,8 +79,10 @@ handleTab(event) {
               <input type="text" name="level" ref={(input) => { this.levelInput = input; }} /><br></br>
               <input type="text" name="dxCode" ref={(input) => { this.dxCodeInput = input; }} />
             </form>
+            <div>{this.state.manual ? "open" : "closed" }</div>
           </Grid>
         </Grid>
+        { this.state.manual ? <div className="popup"><div className="popup-inner">test popup</div></div> : null }
       </div>
     );
   }
