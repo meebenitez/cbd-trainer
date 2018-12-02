@@ -2,8 +2,6 @@
 
 const initialState = {
     currentCall: "",
-    openManual: false,
-    dxCode: "test",
     result: "fail",
     timeLeft: 0,
     inProgress: false,

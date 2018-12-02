@@ -79,6 +79,11 @@ handleTab(event) {
           <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
             <div className="call-container">
               <span onClick={this.props.changeTest} className="text-center">Call Details:</span>
+              <div>
+                <p>29 y/o male</p>
+                <p>slurred speech</p>
+                <p>possible alcohol intoxication</p>
+              </div>
             </div>
           </Grid>
           <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
