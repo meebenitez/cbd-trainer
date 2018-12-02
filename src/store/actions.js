@@ -1,8 +1,10 @@
 import { store } from '../index'
 
 
-export const loadCall = () => {
-    debugger;
+export const loadCalls = () => {
+    return (dispatch, getState) => {
+        debugger;
+    }
 
 }
 

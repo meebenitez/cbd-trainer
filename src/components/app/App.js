@@ -3,6 +3,7 @@ import Manual from '../manual/Manual'
 import './App.css';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
+import * as gameActions from '../../store/actions'
 
 
 class App extends Component {
@@ -15,16 +16,19 @@ class App extends Component {
     }
     this.handleTab = this.handleTab.bind(this)
     this.toggleManual = this.toggleManual.bind(this)
+    this.handleEnter = this.handleEnter.bind(this)
   }
 
 componentDidMount(){
   this.levelInput.focus()
   document.addEventListener("keydown", this.handleTab, false)
   document.addEventListener("keydown", this.toggleManual, false)
+  document.addEventListener("keydown", this.handleEnter, false)
 }
 componentWillUnmount(){
   document.removeEventListener("keydown", this.handleTab)
   document.removeEventListener("keydown", this.toggleManual)
+  document.removeEventListener("keydown", this.handleEnter)
 }
 
 
@@ -38,6 +42,13 @@ toggleManual(event) {
         this.levelInput.focus()
       }
     })
+  }
+}
+
+handleEnter(event){
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    this.props.loadCalls()
   }
 }
 
@@ -107,23 +118,23 @@ handleTab(event) {
 
 const mapStateToProps= state => {
   return {
-    currentCall: state.currentCall,
-    result: state.result,
-    timeLeft: state.timeLeft,
-    inProgress: state.inProgress,
-    score: state.score,
-    totalCorrect: state.totalCorrect,
-    totalWrong: state.totalWrong,
-    times: state.times,
-    avgTime: state.avgTime,
+    currentCall: state.game.currentCall,
+    result: state.game.result,
+    timeLeft: state.game.timeLeft,
+    inProgress: state.game.inProgress,
+    score: state.game.score,
+    totalCorrect: state.game.totalCorrect,
+    totalWrong: state.game.totalWrong,
+    times: state.game.times,
+    avgTime: state.game.avgTime,
+    savedPage: state.key.savedPage
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeTest: () => dispatch({type: 'CHANGE_STATE'}),
-    handleDxCode: () => dispatch({type: 'UPDATE_DXCODE'}),
-    handleSubmit: () => dispatch({type: 'HANDLE_SUBMIT'})
+    loadGame: () => dispatch(gameActions.loadGame()),
+    loadCalls: () => dispatch(gameActions.loadCalls())
   };
 }
 

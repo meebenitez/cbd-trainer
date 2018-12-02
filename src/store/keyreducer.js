@@ -1,15 +1,7 @@
 
 
 const initialState = {
-    currentCall: "",
-    result: "fail",
-    timeLeft: 0,
-    inProgress: false,
-    score: 0,
-    totalCorrect: 0,
-    totalWrong: 0,
-    times: [],
-    avgTime: 0,
+    savedPage: null
 }
 
 
@@ -25,26 +17,23 @@ const CALLS = {
 }
 
 
-const reducer = (state = initialState, action) => {
+const keyreducer = (state = initialState, action) => {
     switch(action.type) {
         case 'CHANGE_STATE':
         return {
             ...state,
-            test: "no longer test"
         }
         case 'UPDATE_DXCODE':
         return {
             ...state,
-            dxCode: "R807"
         }
         case 'HANDLE_SUBMIT':
         return {
             ...state,
-            result: "pass"
         }
     default:
         return state;
     }    
 }
 
-export default reducer;
+export default keyreducer;

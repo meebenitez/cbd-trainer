@@ -2,12 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/app/App';
-import { createStore } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import * as serviceWorker from './serviceWorker';
-import reducer from './store/reducer'
+import keyReducer from './store/keyreducer'
+import gameReducer from './store/gamereducer'
 import { Provider } from 'react-redux'
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+    key: keyReducer,
+    game: gameReducer
+});
+
+
+
+const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(rootReducer,
+    composeEnhancers(applyMiddleware(thunk))
+);
+
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
