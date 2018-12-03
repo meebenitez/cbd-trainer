@@ -1,4 +1,3 @@
-import { store } from '../index'
 
 
 export const loadCalls = () => {

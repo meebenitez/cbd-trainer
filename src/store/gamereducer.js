@@ -1,7 +1,9 @@
 
-
 const initialState = {
+    calls: [],
+    callHistory: [],
     currentCall: "",
+    callNum: 0,
     result: "fail",
     timeLeft: 0,
     inProgress: false,
@@ -13,34 +15,27 @@ const initialState = {
 }
 
 
-const CALLS = {
-    callOne: {
-        details: ["21 y/o Male", "complaining of chest pain"],
-        result: {response: "BLS", code: "7R1"}
-        },
-    callTwo: {
-        details: ["21 y/o Male", "complaining of chest pain"],
-        result: {response: "BLS", code: "7R1"}
-    }
-}
 
 
 const gamereducer = (state = initialState, action) => {
     switch(action.type) {
-        case 'CHANGE_STATE':
+        case 'CREATE_CALLS':
         return {
             ...state,
-            test: "no longer test"
+            calls: action.calls
         }
-        case 'UPDATE_DXCODE':
+        case 'INCREMENT_CALL':
         return {
             ...state,
-            dxCode: "R807"
+            callNum: this.state.callNum += 1
         }
-        case 'HANDLE_SUBMIT':
+        case 'UPDATE_SCORE':
+        debugger;
         return {
             ...state,
-            result: "pass"
+            score: state.score += action.results.score,
+            callHistory: [...state.callHistory].push(action.results),
+            callNum: state.callNum += 1
         }
     default:
         return state;

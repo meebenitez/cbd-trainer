@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Page from '../manual/Page'
 import Select from 'react-select';
 import { pages } from '../../data/data'
+import { checkResult } from '../../helpers/gamehelpers'
 
 
 import './App.css';
@@ -28,6 +28,7 @@ class App extends Component {
   }
 
 componentDidMount(){
+  this.props.loadCalls()
   this.levelInput.focus()
   document.addEventListener("keydown", this.handleTab, false)
   document.addEventListener("keydown", this.toggleManual, false)
@@ -49,6 +50,7 @@ toggleManual(event) {
     })
   }
 }
+
 handleSelect = (selection) => {
   this.setState({
       ...this.state,
@@ -57,8 +59,16 @@ handleSelect = (selection) => {
   }, this.props.setPageImg(selection.value))
 }
 
-handleSubmit() {
-  this.props.submitAnswer( {response: this.state.response, dxCode: this.state.dxCode} )
+handleSubmit(event) {
+  event.preventDefault()
+  if (this.state.response.trim() === "" || this.state.dxCode.trim() === ""){
+    alert("No blank fields allowed!")
+  } else {
+    this.props.updateScore(
+      checkResult(this.props.calls[this.props.callNum], 
+      {response: this.state.response.toUpperCase(), dxCode: this.state.dxCode.toUpperCase()})
+    )
+  }
 }
 
 handleDxCode(event){
@@ -98,13 +108,20 @@ handleTab(event) {
   }
 }
 
-
+renderCall(){
+  if (this.props.calls.length > 0) {
+    return this.props.calls[this.props.callNum].details.map((line, index) => {
+      return (
+        <li key={`line${index}`}>{line}</li>
+      )
+    })
+  } 
+}
 
 
 
 
   render() {
-    console.log(this.props.currentCall)
     return (
       <div className="col-12">
           <div className="row black-background">
@@ -137,12 +154,10 @@ handleTab(event) {
                 </div>
                 <div className="col-12 mb-2">
                   <div className="call-container">
-                    <span onClick={this.props.changeTest} className="text-center">Call Details:</span>
-                    <div>
-                      <p>29 y/o male</p>
-                      <p>slurred speech</p>
-                      <p>possible alcohol intoxication</p>
-                    </div>
+                    <h2>Call Details</h2>
+                    <ul>
+                      {this.renderCall()}
+                    </ul>
                   </div>
                 </div>  
               </div>
@@ -172,25 +187,27 @@ handleTab(event) {
 
 const mapStateToProps= state => {
   return {
-    currentCall: state.game.currentCall,
+    calls: state.game.calls,
     result: state.game.result,
     timeLeft: state.game.timeLeft,
     inProgress: state.game.inProgress,
     score: state.game.score,
+    gameHistory: state.game.gameHistory,
     totalCorrect: state.game.totalCorrect,
     totalWrong: state.game.totalWrong,
     times: state.game.times,
     avgTime: state.game.avgTime,
-    savedPage: state.key.savedPage
+    savedPage: state.key.savedPage,
+    callNum: state.game.callNum
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadGame: () => dispatch(gameActions.loadGame()),
     loadCalls: () => dispatch(gameActions.loadCalls()),
-    submitAnswer: (answer) => dispatch(gameActions.submitAnswer(answer)),
-    setPageImg: (pageImg) => dispatch(keyActions.setPageImg(pageImg))
+    updateScore: (result) => dispatch(gameActions.updateScore(result)),
+    setPageImg: (pageImg) => dispatch(keyActions.setPageImg(pageImg)),
+    incrementCall: () => dispatch(gameActions.incrementCall())
   };
 }
 
