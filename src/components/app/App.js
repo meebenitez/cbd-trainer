@@ -118,6 +118,13 @@ handleTab = (event) => {
   }
 }
 
+handleEnter = (event) => {
+  if (event.keyCode === 9 && !this.state.manual) {
+    event.preventDefault();
+    this.handleSubmit();
+  }
+}
+
 renderCall(){
   if (this.props.calls.length > 0) {
     return this.props.calls[this.props.callNum].details.map((line, index) => {
