@@ -12,6 +12,8 @@ const initialState = {
     totalWrong: 0,
     times: [],
     avgTime: 0,
+    time: 0,
+    start: 0
 }
 
 

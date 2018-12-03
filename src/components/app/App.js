@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import * as gameActions from '../../store/gameactions'
 import * as keyActions from '../../store/keyactions'
 
+const prettyMs = require('pretty-ms');
+
 
 class App extends Component {
   constructor() {
@@ -19,6 +21,9 @@ class App extends Component {
       dxCode: "",
       manual: false,
       pageImg: null,
+      time: 0,
+      start: 0,
+      timeOn: false
     }
   }
 
@@ -135,10 +140,44 @@ renderCall(){
   } 
 }
 
+startTimer = () => {
+  this.setState({
+      time: this.state.time,
+      start: Date.now() - this.state.time,
+      timeOn: true
+  })
+  this.timer = setInterval(() => this.setState({
+      time: Date.now() - this.state.start
+  }), 1)
+  console.log("start")
+}
+
+stopTimer = () => {
+  this.setState({timeOn: false})
+  clearInterval(this.timer)
+  console.log("stop")
+}
+
+resetTimer = () => {
+  this.setState({time: 0})
+  console.log("reset")
+}
+
 
 
 
   render() {
+
+    const start = (this.state.time === 0 && !this.state.timeOn) ?
+      <button onClick={this.startTimer}>Start</button> : null
+    const stop = (this.state.timeOn) ?
+      <button onClick={this.stopTimer}>Stop</button> : null
+    const reset = (this.state.time !== 0 && !this.state.timeOn) ?
+      <button onClick={this.resetTimer}>Reset</button> : null
+    const resume = (this.state.time !== 0 && !this.state.timeOn) ?
+      <button onClick={this.startTimer}>Resume</button> : null
+
+
     return (
       <div className="col-12">
           <div className="row black-background">
@@ -149,6 +188,13 @@ renderCall(){
             <div className="col-5 mt-3">
               <div className="col-12 score-box">
                 Total Score: {this.props.score} / 105
+                <div>
+                  <h3>timer: {prettyMs(this.state.time)}</h3>
+                  {start}
+                  {resume}
+                  {stop}
+                  {reset}
+                </div>
               </div>
             </div>
           </div>
@@ -160,7 +206,7 @@ renderCall(){
                       <h2>RESPONSE:</h2>
                       <input type="text" name="level" value={this.state.response} onChange={this.handleResponse} style={{ textTransform: 'uppercase' }} ref={(input) => { this.levelInput = input; }} />
                     </div>
-                    <div className="input-holder">
+                    <div className="input-holder mt-4">
                       <h2>DX CODE:</h2>
                       <input type="text" name="dxCode" value={this.state.dxCode} onChange={this.handleDxCode} style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
                     </div>
