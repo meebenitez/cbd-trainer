@@ -31,6 +31,11 @@ const keyreducer = (state = initialState, action) => {
         return {
             ...state,
         }
+        case 'SAVE_PAGE':
+        return {
+            ...state,
+            savedPage: action.pageImg
+        }
     default:
         return state;
     }    

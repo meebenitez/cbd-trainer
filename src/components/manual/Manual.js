@@ -3,14 +3,14 @@ import Page from './Page'
 import './Manual.css';
 
 class Manual extends Component {
-  constructor() {
+  constructor(props) {
     super();
 
     }
     
   render() {
     return (
-      <Page />
+      <Page {...this.props} />
     );
   }
 }

@@ -3,7 +3,8 @@ import Manual from '../manual/Manual'
 import './App.css';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
-import * as gameActions from '../../store/actions'
+import * as gameActions from '../../store/gameactions'
+import * as keyActions from '../../store/keyactions'
 
 
 class App extends Component {
@@ -16,19 +17,16 @@ class App extends Component {
     }
     this.handleTab = this.handleTab.bind(this)
     this.toggleManual = this.toggleManual.bind(this)
-    this.handleEnter = this.handleEnter.bind(this)
   }
 
 componentDidMount(){
   this.levelInput.focus()
   document.addEventListener("keydown", this.handleTab, false)
   document.addEventListener("keydown", this.toggleManual, false)
-  document.addEventListener("keydown", this.handleEnter, false)
 }
 componentWillUnmount(){
   document.removeEventListener("keydown", this.handleTab)
   document.removeEventListener("keydown", this.toggleManual)
-  document.removeEventListener("keydown", this.handleEnter)
 }
 
 
@@ -45,12 +43,6 @@ toggleManual(event) {
   }
 }
 
-handleEnter(event){
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    this.props.loadCalls()
-  }
-}
 
 handleTab(event) {
   if (event.keyCode === 9) {
@@ -110,7 +102,7 @@ handleTab(event) {
             </form>
           </Grid>
         </Grid>
-        { this.state.manual ? <div className="popup"><div className="popup-inner"><Manual /></div></div> : null }
+        { this.state.manual ? <div className="popup"><div className="popup-inner"><Manual {...this.props} /></div></div> : null }
       </div>
     );
   }
@@ -134,7 +126,8 @@ const mapStateToProps= state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadGame: () => dispatch(gameActions.loadGame()),
-    loadCalls: () => dispatch(gameActions.loadCalls())
+    loadCalls: () => dispatch(gameActions.loadCalls()),
+    setPageImg: (pageImg) => dispatch(keyActions.setPageImg(pageImg))
   };
 }
 

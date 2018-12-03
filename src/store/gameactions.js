@@ -14,3 +14,9 @@ export const loadGame = () => {
     }
 
 }
+
+export const setPageImg = (page) => {
+    return (dispatch) => {
+        dispatch({type: 'SAVE_PAGE', pageImg: page})
+    }
+}

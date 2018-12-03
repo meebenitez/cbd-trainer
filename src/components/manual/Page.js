@@ -33,7 +33,7 @@ const pages = [
 ]
 
 class Page extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
         selection: null,
@@ -42,13 +42,22 @@ class Page extends Component {
 
 }
 
+componentWillMount(){
+    if (this.props.savedPage) {
+        this.setState({
+            ...this.state,
+            pageImg: this.props.savedPage
+        })
+    }
+}
+
  
 
    
     handleSelect = (selection) => {
         this.setState({
             pageImg: selection.value
-        })
+        }, this.props.setPageImg(selection.value))
     }
 
     render() {
