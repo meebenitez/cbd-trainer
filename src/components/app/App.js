@@ -20,25 +20,20 @@ class App extends Component {
       manual: false,
       pageImg: null,
     }
-    this.handleTab = this.handleTab.bind(this)
-    this.toggleManual = this.toggleManual.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleDxCode = this.handleDxCode.bind(this)
-    this.handleResponse = this.handleResponse.bind(this)
   }
 
 componentDidMount(){
   this.props.loadCalls()
   this.levelInput.focus()
   document.addEventListener("keydown", this.handleTab, false)
-  document.addEventListener("keydown", this.toggleManual, false)
+  document.addEventListener("keydown", this.toggleSearchKey, false)
 }
 componentWillUnmount(){
   document.removeEventListener("keydown", this.handleTab)
-  document.removeEventListener("keydown", this.toggleManual)
+  document.removeEventListener("keydown", this.toggleSearchKey)
 }
 
-toggleManual(event) {
+toggleSearchKey = (event) => {
   if (event.keyCode === 18) {
     event.preventDefault();
     this.setState({
@@ -51,6 +46,17 @@ toggleManual(event) {
   }
 }
 
+toggleSearchButton = () => {
+  this.setState({
+    manual: !this.state.manual
+  }, () => {
+  if (!this.state.manual) {
+    this.levelInput.focus()
+  }
+})
+
+}
+
 handleSelect = (selection) => {
   this.setState({
       ...this.state,
@@ -59,19 +65,23 @@ handleSelect = (selection) => {
   }, this.props.setPageImg(selection.value))
 }
 
-handleSubmit(event) {
+handleSubmit = (event) => {
   event.preventDefault()
   if (this.state.response.trim() === "" || this.state.dxCode.trim() === ""){
     alert("No blank fields allowed!")
   } else {
-    this.props.updateScore(
+    this.setState({
+      ...this.state,
+      dxCode: "",
+      response: ""
+    }, this.props.updateScore(
       checkResult(this.props.calls[this.props.callNum], 
       {response: this.state.response.toUpperCase(), dxCode: this.state.dxCode.toUpperCase()})
-    )
+    ))
   }
 }
 
-handleDxCode(event){
+handleDxCode = (event) => {
   event.preventDefault();
   this.setState({
     ...this.state,
@@ -79,7 +89,7 @@ handleDxCode(event){
   })
 }
 
-handleResponse(event){
+handleResponse = (event) => {
   event.preventDefault();
   this.setState({
     ...this.state,
@@ -88,7 +98,7 @@ handleResponse(event){
 }
 
 
-handleTab(event) {
+handleTab = (event) => {
   if (event.keyCode === 9) {
     event.preventDefault();
     if (!this.state.manual) {
@@ -131,7 +141,7 @@ renderCall(){
             </div>
             <div className="col-5 mt-3">
               <div className="col-12 score-box">
-                Score box
+                Total Score: {this.props.score}
               </div>
             </div>
           </div>
@@ -141,11 +151,11 @@ renderCall(){
                   <form>
                     <div className="input-holder">
                       <h2>RESPONSE:</h2>
-                      <input type="text" name="level" onChange={this.handleResponse} style={{ textTransform: 'uppercase' }} ref={(input) => { this.levelInput = input; }} />
+                      <input type="text" name="level" value={this.state.response} onChange={this.handleResponse} style={{ textTransform: 'uppercase' }} ref={(input) => { this.levelInput = input; }} />
                     </div>
                     <div className="input-holder">
                       <h2>DX CODE:</h2>
-                      <input type="text" name="dxCode" onChange={this.handleDxCode} style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
+                      <input type="text" name="dxCode" value={this.state.dxCode} onChange={this.handleDxCode} style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
                     </div>
                     <div>
                       <button type="submit" onClick={this.handleSubmit}>Dispatch</button>
@@ -162,7 +172,10 @@ renderCall(){
                 </div>  
               </div>
               <div className="col-7 p-0 m-0">
+                <div><button onClick={this.toggleSearchButton}>Search</button></div>
+                <div>
                   <img src={`img/pages/${this.props.savedPage}`} alt={this.props.savedPage} width="100%"/>
+                </div>
               </div>
           </div>
         { this.state.manual ? 
