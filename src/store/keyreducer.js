@@ -1,7 +1,7 @@
 
 
 const initialState = {
-    savedPage: null
+    savedPage: 'manual_cover.png'
 }
 
 
