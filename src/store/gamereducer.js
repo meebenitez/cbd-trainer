@@ -13,7 +13,8 @@ const initialState = {
     times: [],
     avgTime: 0,
     time: 0,
-    start: 0
+    start: 0,
+    callReady: true,
 }
 
 

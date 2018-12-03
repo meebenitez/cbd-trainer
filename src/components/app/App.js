@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { pages } from '../../data/data'
 import { checkResult } from '../../helpers/gamehelpers'
+import Timer from './timer/Timer'
+import Call from './call/Call'
 
 
 import './App.css';
@@ -9,7 +11,6 @@ import { connect } from 'react-redux';
 import * as gameActions from '../../store/gameactions'
 import * as keyActions from '../../store/keyactions'
 
-const prettyMs = require('pretty-ms');
 
 
 class App extends Component {
@@ -130,52 +131,11 @@ handleEnter = (event) => {
   }
 }
 
-renderCall(){
-  if (this.props.calls.length > 0) {
-    return this.props.calls[this.props.callNum].details.map((line, index) => {
-      return (
-        <li key={`line${index}`}>{line}</li>
-      )
-    })
-  } 
-}
-
-startTimer = () => {
-  this.setState({
-      time: this.state.time,
-      start: Date.now() - this.state.time,
-      timeOn: true
-  })
-  this.timer = setInterval(() => this.setState({
-      time: Date.now() - this.state.start
-  }), 1)
-  console.log("start")
-}
-
-stopTimer = () => {
-  this.setState({timeOn: false})
-  clearInterval(this.timer)
-  console.log("stop")
-}
-
-resetTimer = () => {
-  this.setState({time: 0})
-  console.log("reset")
-}
-
 
 
 
   render() {
 
-    const start = (this.state.time === 0 && !this.state.timeOn) ?
-      <button onClick={this.startTimer}>Start</button> : null
-    const stop = (this.state.timeOn) ?
-      <button onClick={this.stopTimer}>Stop</button> : null
-    const reset = (this.state.time !== 0 && !this.state.timeOn) ?
-      <button onClick={this.resetTimer}>Reset</button> : null
-    const resume = (this.state.time !== 0 && !this.state.timeOn) ?
-      <button onClick={this.startTimer}>Resume</button> : null
 
 
     return (
@@ -188,13 +148,6 @@ resetTimer = () => {
             <div className="col-5 mt-3">
               <div className="col-12 score-box">
                 Total Score: {this.props.score} / 105
-                <div>
-                  <h3>timer: {prettyMs(this.state.time)}</h3>
-                  {start}
-                  {resume}
-                  {stop}
-                  {reset}
-                </div>
               </div>
             </div>
           </div>
@@ -216,12 +169,7 @@ resetTimer = () => {
                   </form>
                 </div>
                 <div className="col-12 mb-2">
-                  <div className="call-container">
-                    <h2>Call Details</h2>
-                    <ul>
-                      {this.renderCall()}
-                    </ul>
-                  </div>
+                  <Call {...this.props} />
                 </div>  
               </div>
               <div className="col-7 p-0 m-0">
@@ -264,7 +212,8 @@ const mapStateToProps= state => {
     times: state.game.times,
     avgTime: state.game.avgTime,
     savedPage: state.key.savedPage,
-    callNum: state.game.callNum
+    callNum: state.game.callNum,
+    callReady: state.game.callReady
   };
 }
 
