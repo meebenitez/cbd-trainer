@@ -34,7 +34,7 @@ const gamereducer = (state = initialState, action) => {
         return {
             ...state,
             score: state.score += action.results.score,
-            callHistory: [...state.callHistory].push(action.results),
+            callHistory: [...state.callHistory, action.results],
             callNum: state.callNum += 1
         }
     default:

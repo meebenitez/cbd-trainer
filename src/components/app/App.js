@@ -141,7 +141,7 @@ renderCall(){
             </div>
             <div className="col-5 mt-3">
               <div className="col-12 score-box">
-                Total Score: {this.props.score}
+                Total Score: {this.props.score} / 105
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@ renderCall(){
               <div className="col-5">
                 <div className="col-12 mb-4">
                   <form>
-                    <div className="input-holder">
+                    <div className="input-holder mt-4">
                       <h2>RESPONSE:</h2>
                       <input type="text" name="level" value={this.state.response} onChange={this.handleResponse} style={{ textTransform: 'uppercase' }} ref={(input) => { this.levelInput = input; }} />
                     </div>
@@ -158,7 +158,7 @@ renderCall(){
                       <input type="text" name="dxCode" value={this.state.dxCode} onChange={this.handleDxCode} style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
                     </div>
                     <div>
-                      <button type="submit" onClick={this.handleSubmit}>Dispatch</button>
+                      <button type="submit" onClick={this.handleSubmit}>Dispatch (RETURN)</button>
                     </div>
                   </form>
                 </div>
@@ -172,7 +172,7 @@ renderCall(){
                 </div>  
               </div>
               <div className="col-7 p-0 m-0">
-                <div><button onClick={this.toggleSearchButton}>Search</button></div>
+                <div><button onClick={this.toggleSearchButton}>Search Manual (ALT)</button></div>
                 <div>
                   <img src={`img/pages/${this.props.savedPage}`} alt={this.props.savedPage} width="100%"/>
                 </div>
