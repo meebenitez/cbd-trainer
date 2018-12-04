@@ -19,6 +19,7 @@ class App extends Component {
     this.state = {
       tab: false,
       response: "",
+      responseOn: false,
       dxCode: "",
       manual: false,
       pageImg: null,
@@ -33,17 +34,20 @@ componentDidMount(){
   document.addEventListener("keydown", this.handleTab, false)
   document.addEventListener("keydown", this.toggleSearchKey, false)
   document.addEventListener("keydown", this.handleN, false)
+  document.addEventListener("keydown", this.handleD, false)
 }
 componentWillUnmount(){
   document.removeEventListener("keydown", this.handleTab)
   document.removeEventListener("keydown", this.toggleSearchKey)
   document.removeEventListener("keydown", this.handleN)
+  document.removeEventListener("keydown", this.handleD, false)
 }
 
 handleN = (event) => {
   if (event.keyCode === 78 && !this.props.timeOn) {
     event.preventDefault();
     this.props.startTimer()
+    this.levelInput.focus()
   }
 }
 
@@ -71,71 +75,65 @@ toggleSearchButton = () => {
 
 }
 
-handleSelect = (selection) => {
-  this.setState({
-      ...this.state,
-      pageImg: selection.value,
-      manual: !this.state 
-  }, this.props.setPageImg(selection.value))
-}
-
-handleSubmit = (event) => {
-  event.preventDefault()
-  if (this.state.response.trim() === "" || this.state.dxCode.trim() === ""){
-    alert("No blank fields allowed!")
-  } else {
-    this.setState({
-      ...this.state,
-      dxCode: "",
-      response: ""
-    }, this.props.updateScore(
-      checkResult(this.props.calls[this.props.callNum], 
-      {response: this.state.response.toUpperCase(), dxCode: this.state.dxCode.toUpperCase(), time: this.props.time})
-    ))
-  }
-}
-
-handleDxCode = (event) => {
-  event.preventDefault();
-  this.setState({
-    ...this.state,
-    dxCode: event.target.value
-  })
-}
-
 handleResponse = (event) => {
-  event.preventDefault();
   this.setState({
     ...this.state,
     response: event.target.value
   })
 }
 
+handleSelect = (selection) => {
+  this.setState({
+      ...this.state,
+      pageImg: selection.value,
+      manual: !this.state 
+  }, this.props.setPageImg(selection.value))
+  this.levelInput.focus();
+}
+
+sendSubmit = () => {
+  this.props.updateScore(
+    checkResult(this.props.calls[this.props.callNum], 
+    {response: this.state.response, time: this.props.time}));
+  this.setState({
+      ...this.state,
+      response: ""
+    });
+}
+
+handleSubmit = (event) => {
+  event.preventDefault()
+  if (this.state.response === ""){
+    alert("No blank fields allowed!")
+  } else {
+    this.props.updateScore(
+      checkResult(this.props.calls[this.props.callNum], 
+      {response: this.state.response, time: this.props.time}));
+    this.setState({
+        ...this.state,
+        response: ""
+      });
+  }
+}
+
+
 
 handleTab = (event) => {
   if (event.keyCode === 9) {
     event.preventDefault();
     if (!this.state.manual) {
-      if (this.state.tab){
-        this.setState({
-          tab: !this.state.tab
-        })
-        this.levelInput.focus()
-      } else {
-        this.setState({
-          tab: !this.state.tab,
-          manualFocus: !this.state.manualFocus
-        })
-        this.dxCodeInput.focus()
-      }
+      this.levelInput.focus();
     }
   }
 }
 
-handleEnter = (event) => {
-  if (event.keyCode === 9 && !this.state.manual) {
+
+
+
+handleD = (event) => {
+  if (event.keyCode === 68 && event.shiftKey === true && !this.state.manual) {
     event.preventDefault();
-    this.handleSubmit();
+    this.sendSubmit();
   }
 }
 
@@ -168,20 +166,16 @@ handleEnter = (event) => {
                 </div> 
                 <div className="col-12 mb-4">
                   <form>
-                    <div className="input-holder mt-3">
+                    <div className="input-holder mt-5">
                         <span className={!this.props.timeOn ? "disabled" : ""}><h2>RESPONSE:</h2></span>
                         <select name="level" className="level-dropdown" value={this.state.response} disabled={!this.props.timeOn ? "disabled" : ""} onChange={this.handleResponse} ref={(input) => { this.levelInput = input; }}>
-                        <option value=""></option>
+                        <option value="">Choose Response</option>
                           <option value="ALS">ALS</option>
                           <option value="BLS">BLS</option>
-                        </select>  
-                    </div>
-                    <div className="input-holder mt-4">
-                      <span className={!this.props.timeOn ? "disabled" : ""}><h2>DX CODE:</h2></span>
-                      <input type="text" name="dxCode" className={!this.props.timeOn ? "disabled" : ""} disabled={!this.props.timeOn ? "disabled" : ""} value={this.state.dxCode} onChange={this.handleDxCode} style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
-                    </div>
-                    <div>
-                      <button type="submit" className={!this.props.timeOn ? "disabled-button" : "" } onClick={this.handleSubmit}>Dispatch (RETURN)</button>
+                        </select> 
+                        <div className="mt-2">
+                          <button type="submit" className={!this.props.timeOn ? "disabled-button" : "" } onClick={this.handleSubmit}>Dispatch (SHFT + 'D')</button>
+                        </div>
                     </div>
                   </form>
                 </div>

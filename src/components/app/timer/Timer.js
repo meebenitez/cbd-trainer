@@ -21,7 +21,7 @@ class Timer extends Component {
             <button className="call-button" onClick={this.props.startTimer}>{this.props.callNum === 0 ? 'Answer Call (N)' : 'Answer Next Call (N)'}</button> : null;
         
         return (
-          <div className="col-12 p-0 m-0">
+          <div className="col-12 p-0 ml-0 mt-5">
             <div className="call-button-container ml-0 mt-2">
               {start}
             </div>

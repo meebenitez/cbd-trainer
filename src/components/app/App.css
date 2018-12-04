@@ -25,6 +25,10 @@
 .call-button-container{
   height: 102px;
 }
+.dispatch-button{
+  display: inline-block;
+  padding-left: 10px;
+}
 
 .popup {
   position: fixed;
