@@ -128,17 +128,12 @@ handleTab = (event) => {
 }
 
 
-
-
 handleD = (event) => {
   if (event.keyCode === 68 && event.shiftKey === true && !this.state.manual) {
     event.preventDefault();
     this.sendSubmit();
   }
 }
-
-
-
 
   render() {
 
@@ -154,13 +149,13 @@ handleD = (event) => {
             <div className="col-5 mt-3">
               <div className="col-12 score-box">
                 Total Score: {this.props.score} / 105<br></br>  
-                Best Dispatch Time:{this.props.callHistory.length > 0 ? prettyMs(this.props.callHistory.map(call => call.time).sort()[0]) : null}  <br></br>
+                Best Dispatch Time: {this.props.callHistory.length > 0 ? prettyMs(this.props.callHistory.map(call => call.time).sort()[0]) : null}  <br></br>
                 Avg Dispatch Time: {this.props.callHistory.length > 1 ? prettyMs(findAvgTime(this.props.callHistory)) : null}
               </div>
             </div>
           </div>
           <div className="row wrapper">
-              <div className="col-5 game-background pl-4 pr-4 pt-2">
+              <div className="col-5 game-background pl-4 pr-4 pt-2 pb-2">
                 <div className="col-12 call-container m-2">
                   <Call {...this.props} />
                 </div> 
@@ -224,7 +219,8 @@ const mapStateToProps= state => {
     time: state.game.time,
     start: state.game.start,
     timeOn: state.game.timeOn,
-    callLimit: state.game.callLimit
+    callLimit: state.game.callLimit,
+    lastCall: state.game.lastCall
   };
 }
 

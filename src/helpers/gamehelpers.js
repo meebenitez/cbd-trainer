@@ -1,11 +1,36 @@
 
 export const checkResult = (call, answer) => {
-    var results = {callId: call.id, response: null, score: 0, time: answer.time}
+    var results = {
+            callId: call.id, 
+            response: answer.response, 
+            responseResult: null, 
+            responseColor: null, 
+            score: 0, 
+            time: answer.time, 
+            timeColor: null, 
+            timeResult: null
+    }
     if (call.result.response === answer.response) {
         results.score = results.score += 10;
-        results.response = "correct";
+        results.responseResult = "correct";
+        results.responseColor = "green"
     } else {
-        results.response = "wrong";
+        results.responseResult = "wrong";
+        results.responseColor = "red"
+    }
+    if (results.responseResult === "correct") {
+        if (answer.time <= 3000) {
+            results.timeResult = "Good"
+            results.score = results.score += 10;
+            results.timeColor = "green"
+        } else if (answer.time <= 7000) {
+            results.timeResult = "Fair"
+            results.score = results.score += 5;
+            results.timeColor="yellow"
+        } else {
+            results.timeResult = "Bad"
+            results.timeColor="red"
+        }
     }
     return results
 }

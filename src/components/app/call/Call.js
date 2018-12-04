@@ -9,14 +9,42 @@ class Call extends Component {
     }
 
 
-    renderCall(){
+    renderCall = (call= this.props.calls[this.props.callNum]) => {
         if (this.props.calls.length > 0) {
-            return this.props.calls[this.props.callNum].details.map((line, index) => {
-            return (
-                <li key={`line${index}`}>{line}</li>
-            )
+            return call.details.map((line, index) => {
+                return (
+                    <li key={`line${index}`}>{line}</li>
+                )
             })
         } 
+    }
+
+    renderResult = () => {
+        
+        if (this.props.callHistory.length > 0 && this.props.lastCall) {
+            const result =  this.props.callHistory.filter((call) => {
+                return call.callId === this.props.lastCall.id;
+            })[0]
+            if (result) {
+                return (
+                    <div>
+                        <h2>Call Details</h2>
+                        <ul>
+                            {this.renderCall(this.props.lastCall)}
+                        </ul>
+                        <div>Your Response: {result.response} -- "{result.responseResult}"</div>
+                        <div>Dispatch Time: {prettyMs(result.time)} ---checker--- </div>
+                        <div>CBD Manual Page(s): </div>
+                        <div>DxCodes</div>
+                        <div>Click the blue "Answer Next Call" button...</div>
+                    </div>
+    
+                )
+
+            }
+        } else {
+            return null
+        }
     }
 
     
@@ -25,7 +53,7 @@ class Call extends Component {
         return (
             <div>
                 {!this.props.timeOn ? 
-                    null : 
+                    this.renderResult() : 
                     <div>
                         <h2>Call Details</h2>
                         <ul>

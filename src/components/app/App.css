@@ -1,6 +1,7 @@
 .wrapper {
   height: 100%;
   min-height: 100%;
+  background-color: #666666;
 }
 .black-background{
   background-color:#000000;
@@ -19,7 +20,7 @@
   border: 2px solid #333333;
   background-color: #999999;
   border-radius: 4px;
-  height: 250px;
+  height: auto;
   min-height: 250px;
 }
 .call-button-container{
