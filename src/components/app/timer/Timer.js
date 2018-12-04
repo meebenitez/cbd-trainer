@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-const prettyMs = require('pretty-ms');
 
 
 class Timer extends Component {
@@ -12,33 +11,8 @@ class Timer extends Component {
     }
 
 
-    componentDidMount(){        
-        document.addEventListener("keydown", this.handleN, false)
-      }
-      componentWillUnmount(){
-        document.removeEventListener("keydown", this.handleN)
-      }
-
-
-      handleN = (event) => {
-        if (event.keyCode === 78 && !this.state.timeOn) {
-          event.preventDefault();
-          //this.props.toggleCallReady()
-          this.setState({
-            ...this.state,
-            timeOn: true
-          }, this.startTimer())
-          console.log(this.state.timeOn)
-            
-        }
-      }
-
 
       
-      resetTimer = () => {
-        this.setState({time: 0})
-        console.log("reset")
-      }
 
       
       render() {
@@ -47,12 +21,11 @@ class Timer extends Component {
             <button className="call-button" onClick={this.props.startTimer}>{this.props.callNum === 0 ? 'Answer Call (N)' : 'Answer Next Call (N)'}</button> : null;
         
         return (
-          <div className="col-12">
-            <div className="mt-5">
+          <div className="col-12 p-0 m-0">
+            <div className="call-button-container ml-0 mt-2">
               {start}
             </div>
-            {!this.props.timeOn ? null : <h3>Time to Dispatch: {prettyMs(this.props.time)}</h3>}
-            </div>
+          </div>
     
         )}
         

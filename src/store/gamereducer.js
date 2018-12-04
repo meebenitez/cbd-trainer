@@ -2,7 +2,6 @@
 const initialState = {
     calls: [],
     callHistory: [],
-    currentCall: "",
     callNum: 0,
     result: "fail",
     timeLeft: 0,
@@ -12,7 +11,8 @@ const initialState = {
     time: 0,
     start: 0,
     timeOn: false,
-    callLimit: 2
+    callLimit: 5,
+    lastCall: {},
 }
 
 
@@ -63,6 +63,11 @@ const gamereducer = (state = initialState, action) => {
             start: 0,
             callNum: state.callNum += 1,
             endGame: endGame
+        }
+        case 'UPDATE_LAST_CALL':
+        return {
+            ...state,
+            lastCall: action.lastCall
         }
     default:
         return state;

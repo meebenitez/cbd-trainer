@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Timer from '../timer/Timer'
+const prettyMs = require('pretty-ms');
+
 
 class Call extends Component {
 
@@ -24,15 +25,15 @@ class Call extends Component {
         return (
             <div>
                 {!this.props.timeOn ? 
-                    <div><Timer {...this.props} /></div> : 
-                    <div className="call-container">
+                    null : 
+                    <div>
                         <h2>Call Details</h2>
                         <ul>
                             {this.renderCall()}
                         </ul>
-                        <Timer {...this.props}/>
                     </div> }
                 <div>
+                {!this.props.timeOn ? null : <h3>Time to Dispatch: {prettyMs(this.props.time)}</h3>}
                 </div>
             </div>  
         )

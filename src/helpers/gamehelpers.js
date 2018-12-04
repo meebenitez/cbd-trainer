@@ -1,16 +1,17 @@
+
 export const checkResult = (call, answer) => {
     var results = {callId: call.id, response: null, dxCode: null, score: 0, time: answer.time}
     if (call.result.response === answer.response) {
-        results.score = results.score += 5
-        results.response = "correct"
+        results.score = results.score += 5;
+        results.response = "correct";
     } else {
-        results.response = "wrong"
+        results.response = "wrong";
     }
     if (call.result.codes.includes(answer.dxCode)) {
-        results.score = results.score += 10
-        results.dxCode = "correct"
+        results.score = results.score += 10;
+        results.dxCode = "correct";
     } else {
-        results.dxCode = "wrong"
+        results.dxCode = "wrong";
     }
     return results
 }
@@ -30,3 +31,8 @@ export const callShuffle = (array) => {
     }
     return array;
 }
+
+export const findAvgTime = (calls) => {
+    return Math.round(calls.map(call => call.time).reduce((total, sum) => total + sum, 0) / calls.length)
+}
+

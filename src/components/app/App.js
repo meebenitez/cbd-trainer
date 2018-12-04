@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import { pages } from '../../data/data'
-import { checkResult } from '../../helpers/gamehelpers'
+import { checkResult, findAvgTime } from '../../helpers/gamehelpers'
 import Call from './call/Call'
-
-
 import './App.css';
 import { connect } from 'react-redux';
 import * as gameActions from '../../store/gameactions'
 import * as keyActions from '../../store/keyactions'
+import Timer from './timer/Timer'
+const prettyMs = require('pretty-ms');
+
 
 
 
@@ -23,7 +24,6 @@ class App extends Component {
       pageImg: null,
       time: 0,
       start: 0,
-      timeOn: false
     }
   }
 
@@ -32,10 +32,19 @@ componentDidMount(){
   this.levelInput.focus()
   document.addEventListener("keydown", this.handleTab, false)
   document.addEventListener("keydown", this.toggleSearchKey, false)
+  document.addEventListener("keydown", this.handleN, false)
 }
 componentWillUnmount(){
   document.removeEventListener("keydown", this.handleTab)
   document.removeEventListener("keydown", this.toggleSearchKey)
+  document.removeEventListener("keydown", this.handleN)
+}
+
+handleN = (event) => {
+  if (event.keyCode === 78 && !this.props.timeOn) {
+    event.preventDefault();
+    this.props.startTimer()
+  }
 }
 
 toggleSearchKey = (event) => {
@@ -138,7 +147,7 @@ handleEnter = (event) => {
 
 
     return (
-      <div className="col-12">
+      <div className="wrapper">
           <div className="row black-background">
             <div className="col-7 pl-4 pt-2">
               <h1>Criteria Based Dispatch</h1>
@@ -147,18 +156,19 @@ handleEnter = (event) => {
             <div className="col-5 mt-3">
               <div className="col-12 score-box">
                 Total Score: {this.props.score} / 105<br></br>  
-                Best Dispatch Time:  -  Avg Dispatch Time:
+                Best Dispatch Time:{this.props.callHistory.length > 0 ? prettyMs(this.props.callHistory.map(call => call.time).sort()[0]) : null}  <br></br>
+                Avg Dispatch Time: {this.props.callHistory.length > 1 ? prettyMs(findAvgTime(this.props.callHistory)) : null}
               </div>
             </div>
           </div>
-          <div className="row">
-              <div className="col-5">
-                <div className="col-12 mb-2">
+          <div className="row wrapper">
+              <div className="col-5 game-background pl-4 pr-4 pt-2">
+                <div className="col-12 call-container m-2">
                   <Call {...this.props} />
                 </div> 
                 <div className="col-12 mb-4">
                   <form>
-                    <div className="input-holder mt-4">
+                    <div className="input-holder mt-3">
                         <span className={!this.props.timeOn ? "disabled" : ""}><h2>RESPONSE:</h2></span>
                         <select name="level" className="level-dropdown" value={this.state.response} disabled={!this.props.timeOn ? "disabled" : ""} onChange={this.handleResponse} ref={(input) => { this.levelInput = input; }}>
                         <option value=""></option>
@@ -175,11 +185,14 @@ handleEnter = (event) => {
                     </div>
                   </form>
                 </div>
+                <div className="col-12">
+                  <Timer {...this.props}/>
+                </div>
               </div>
               <div className="col-7 p-0 m-0">
                 <div><button onClick={this.toggleSearchButton}>Search Manual (ALT)</button></div>
                 <div>
-                  <img src={`img/pages/${this.props.savedPage}`} alt={this.props.savedPage} width="100%"/>
+                  <img src={`img/pages/${this.props.savedPage}`} alt={this.props.savedPage} width="100%" height="100%"/>
                 </div>
               </div>
           </div>
@@ -210,7 +223,7 @@ const mapStateToProps= state => {
     timeLeft: state.game.timeLeft,
     inProgress: state.game.inProgress,
     score: state.game.score,
-    gameHistory: state.game.gameHistory,
+    callHistory: state.game.callHistory,
     avgTime: state.game.avgTime,
     savedPage: state.key.savedPage,
     callNum: state.game.callNum,
@@ -228,7 +241,8 @@ const mapDispatchToProps = dispatch => {
     setPageImg: (pageImg) => dispatch(keyActions.setPageImg(pageImg)),
     incrementCall: () => dispatch(gameActions.incrementCall()),
     startTimer: () => dispatch(gameActions.startTimer()),
-    stopTimer: () => dispatch(gameActions.stopTimer())
+    stopTimer: () => dispatch(gameActions.stopTimer()),
+    updateLastCall: () => dispatch(gameActions.updateLastCall)
   };
 }
 

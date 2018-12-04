@@ -8,6 +8,12 @@ export const loadCalls = () => {
     }
 }
 
+export const updateLastCall = () => {
+    return (dispatch, getState) => {
+        dispatch({type: 'UPDATE_LAST_CALL', lastCall: getState().game.calls[getState().game.callNum]})
+    }
+}
+
 export const incrementCall = () => {
     return (dispatch) => {
         dispatch({type: 'INCREMENT_CALL'})
@@ -46,7 +52,7 @@ export const startTimer = () => {
                 clearInterval(timer)
             )
         }, 1000);
-        
+        dispatch(updateLastCall())
         dispatch({type: 'START_TIMER'})
         dispatch(tick())
     }
