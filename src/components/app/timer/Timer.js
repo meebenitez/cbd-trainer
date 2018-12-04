@@ -44,11 +44,13 @@ class Timer extends Component {
       render() {
 
         const start = (this.props.time === 0 && !this.props.timeOn && this.props.callNum < this.props.callLimit) ?
-          <button onClick={this.props.startTimer}>{this.props.callNum === 0 ? 'Answer Call (N)' : 'Answer Next Call (N)'}</button> : null;
+            <button className="call-button" onClick={this.props.startTimer}>{this.props.callNum === 0 ? 'Answer Call (N)' : 'Answer Next Call (N)'}</button> : null;
         
         return (
           <div className="col-12">
-            {start}
+            <div className="mt-5">
+              {start}
+            </div>
             {!this.props.timeOn ? null : <h3>Time to Dispatch: {prettyMs(this.props.time)}</h3>}
             </div>
     

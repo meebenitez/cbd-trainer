@@ -24,7 +24,7 @@ class Call extends Component {
         return (
             <div>
                 {!this.props.timeOn ? 
-                    <div>start call <Timer {...this.props} /></div> : 
+                    <div><Timer {...this.props} /></div> : 
                     <div className="call-container">
                         <h2>Call Details</h2>
                         <ul>

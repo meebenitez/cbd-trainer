@@ -44,12 +44,14 @@ input[type=text]{
 }
 
 .disabled {
-  background-color : #111111;
+  background-color : rgb(246,246,246);
+  color: rgb(168,168,168);
 }
 
-.disabled input{
-  background-color : #111111;
+.level-dropdown {
+  font-size: 2em;
 }
+
 
 .input-holder {
   padding: 0px;
@@ -58,6 +60,19 @@ input[type=text]{
 .page-holder {
   padding-top: 15px;
   text-align: center;
+}
+
+.call-button {
+  padding: 10px;
+  width: auto;
+  font-size: 2em;
+  border: 2px solid black;
+  background-color: rgb(30,104,189);
+}
+
+.disabled-button{
+  color: #999999;
+  background-color: rgb(246,246,246);
 }
 
 

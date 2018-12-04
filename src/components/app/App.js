@@ -153,27 +153,28 @@ handleEnter = (event) => {
           </div>
           <div className="row">
               <div className="col-5">
+                <div className="col-12 mb-2">
+                  <Call {...this.props} />
+                </div> 
                 <div className="col-12 mb-4">
                   <form>
                     <div className="input-holder mt-4">
-                      <h2>RESPONSE:</h2>
-                        <select name="level" value={this.state.response} disabled={!this.props.timeOn ? "disabled" : ""} onChange={this.handleResponse} ref={(input) => { this.levelInput = input; }}>
+                        <span className={!this.props.timeOn ? "disabled" : ""}><h2>RESPONSE:</h2></span>
+                        <select name="level" className="level-dropdown" value={this.state.response} disabled={!this.props.timeOn ? "disabled" : ""} onChange={this.handleResponse} ref={(input) => { this.levelInput = input; }}>
+                        <option value=""></option>
                           <option value="ALS">ALS</option>
                           <option value="BLS">BLS</option>
                         </select>  
                     </div>
                     <div className="input-holder mt-4">
-                      <h2>DX CODE:</h2>
-                      <input type="text" name="dxCode" disabled={!this.props.timeOn ? "disabled" : ""} value={this.state.dxCode} onChange={this.handleDxCode} style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
+                      <span className={!this.props.timeOn ? "disabled" : ""}><h2>DX CODE:</h2></span>
+                      <input type="text" name="dxCode" className={!this.props.timeOn ? "disabled" : ""} disabled={!this.props.timeOn ? "disabled" : ""} value={this.state.dxCode} onChange={this.handleDxCode} style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
                     </div>
                     <div>
-                      <button type="submit" onClick={this.handleSubmit}>Dispatch (RETURN)</button>
+                      <button type="submit" className={!this.props.timeOn ? "disabled-button" : "" } onClick={this.handleSubmit}>Dispatch (RETURN)</button>
                     </div>
                   </form>
                 </div>
-                <div className="col-12 mb-2">
-                  <Call {...this.props} />
-                </div>  
               </div>
               <div className="col-7 p-0 m-0">
                 <div><button onClick={this.toggleSearchButton}>Search Manual (ALT)</button></div>
