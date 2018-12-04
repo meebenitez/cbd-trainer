@@ -27,11 +27,6 @@ export const setPageImg = (page) => {
     }
 }
 
-export const toggleCallReady = () => {
-    return (dispatch) => {
-        dispatch({type: 'TOGGLE_CALL_READY'})
-    }
-}
 
 let timer = null;
 

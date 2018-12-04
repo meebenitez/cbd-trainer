@@ -147,7 +147,8 @@ handleEnter = (event) => {
             </div>
             <div className="col-5 mt-3">
               <div className="col-12 score-box">
-                Total Score: {this.props.score} / 105  - Best Time: 
+                Total Score: {this.props.score} / 105<br></br>  
+                Best Dispatch Time:  -  Avg Dispatch Time:
               </div>
             </div>
           </div>
@@ -222,7 +223,6 @@ const mapDispatchToProps = dispatch => {
     updateScore: (result) => dispatch(gameActions.updateScore(result)),
     setPageImg: (pageImg) => dispatch(keyActions.setPageImg(pageImg)),
     incrementCall: () => dispatch(gameActions.incrementCall()),
-    toggleCallReady: () => dispatch(gameActions.toggleCallReady()),
     startTimer: () => dispatch(gameActions.startTimer()),
     stopTimer: () => dispatch(gameActions.stopTimer())
   };
