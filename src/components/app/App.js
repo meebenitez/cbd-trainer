@@ -213,7 +213,9 @@ const mapStateToProps= state => {
     avgTime: state.game.avgTime,
     savedPage: state.key.savedPage,
     callNum: state.game.callNum,
-    callReady: state.game.callReady
+    time: state.game.time,
+    start: state.game.start,
+    timeOn: state.game.timeOn
   };
 }
 
@@ -222,7 +224,10 @@ const mapDispatchToProps = dispatch => {
     loadCalls: () => dispatch(gameActions.loadCalls()),
     updateScore: (result) => dispatch(gameActions.updateScore(result)),
     setPageImg: (pageImg) => dispatch(keyActions.setPageImg(pageImg)),
-    incrementCall: () => dispatch(gameActions.incrementCall())
+    incrementCall: () => dispatch(gameActions.incrementCall()),
+    toggleCallReady: () => dispatch(gameActions.toggleCallReady()),
+    startTimer: () => dispatch(gameActions.startTimer()),
+    stopTimer: () => dispatch(gameActions.stopTimer())
   };
 }
 

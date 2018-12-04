@@ -14,10 +14,10 @@ const initialState = {
     avgTime: 0,
     time: 0,
     start: 0,
-    callReady: true,
+    time: 0,
+    start: 0,
+    timeOn: false,
 }
-
-
 
 
 const gamereducer = (state = initialState, action) => {
@@ -33,12 +33,33 @@ const gamereducer = (state = initialState, action) => {
             callNum: this.state.callNum += 1
         }
         case 'UPDATE_SCORE':
-        debugger;
         return {
             ...state,
             score: state.score += action.results.score,
             callHistory: [...state.callHistory, action.results],
             callNum: state.callNum += 1
+        }
+        case 'TOGGLE_CALL_READY':
+        return {
+            ...state,
+            callReady: false
+        }
+        case 'START_TIMER':
+        return {
+            ...state,
+            time: state.time,
+            start: Date.now() - state.time,
+            timeOn: true
+        }
+        case 'RUN_TIMER':
+        return {
+            ...state,
+            time: Date.now() - state.start
+        }
+        case 'STOP_TIMER':
+        return {
+            ...state,
+            timeOn: false
         }
     default:
         return state;

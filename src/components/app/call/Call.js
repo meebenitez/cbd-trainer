@@ -26,13 +26,13 @@ class Call extends Component {
         return (
             <div>
                 {this.props.callReady ? 
-                    <div>start call</div> : 
+                    <div>start call <Timer {...this.props} /></div> : 
                     <div className="call-container">
                         <h2>Call Details</h2>
                         <ul>
                             {this.renderCall()}
                         </ul>
-                        <Timer callReady={this.props.callReady}/>
+                        <Timer {...this.props}/>
                     </div> }
                 <div>
                 </div>
