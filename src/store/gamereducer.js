@@ -8,12 +8,7 @@ const initialState = {
     timeLeft: 0,
     inProgress: false,
     score: 0,
-    totalCorrect: 0,
-    totalWrong: 0,
-    times: [],
     avgTime: 0,
-    time: 0,
-    start: 0,
     time: 0,
     start: 0,
     timeOn: false,
@@ -37,7 +32,8 @@ const gamereducer = (state = initialState, action) => {
             ...state,
             score: state.score += action.results.score,
             callHistory: [...state.callHistory, action.results],
-            callNum: state.callNum += 1
+            callNum: state.callNum += 1,
+            time: 0,
         }
         case 'TOGGLE_CALL_READY':
         return {
@@ -59,7 +55,8 @@ const gamereducer = (state = initialState, action) => {
         case 'STOP_TIMER':
         return {
             ...state,
-            timeOn: false
+            timeOn: false,
+            start: 0,
         }
     default:
         return state;

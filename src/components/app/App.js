@@ -82,7 +82,7 @@ handleSubmit = (event) => {
       response: ""
     }, this.props.updateScore(
       checkResult(this.props.calls[this.props.callNum], 
-      {response: this.state.response.toUpperCase(), dxCode: this.state.dxCode.toUpperCase()})
+      {response: this.state.response.toUpperCase(), dxCode: this.state.dxCode.toUpperCase(), time: this.props.time})
     ))
   }
 }
@@ -147,7 +147,7 @@ handleEnter = (event) => {
             </div>
             <div className="col-5 mt-3">
               <div className="col-12 score-box">
-                Total Score: {this.props.score} / 105
+                Total Score: {this.props.score} / 105  - Best Time: 
               </div>
             </div>
           </div>
@@ -207,9 +207,6 @@ const mapStateToProps= state => {
     inProgress: state.game.inProgress,
     score: state.game.score,
     gameHistory: state.game.gameHistory,
-    totalCorrect: state.game.totalCorrect,
-    totalWrong: state.game.totalWrong,
-    times: state.game.times,
     avgTime: state.game.avgTime,
     savedPage: state.key.savedPage,
     callNum: state.game.callNum,

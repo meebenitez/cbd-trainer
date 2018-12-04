@@ -25,7 +25,7 @@ class Call extends Component {
     render() {  
         return (
             <div>
-                {this.props.callReady ? 
+                {!this.props.timeOn ? 
                     <div>start call <Timer {...this.props} /></div> : 
                     <div className="call-container">
                         <h2>Call Details</h2>

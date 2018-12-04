@@ -17,6 +17,7 @@ export const incrementCall = () => {
 export const updateScore = (results) => {
     return (dispatch) => {
         dispatch({type: 'UPDATE_SCORE', results: results})
+        dispatch(stopTimer())
     }
 }
 

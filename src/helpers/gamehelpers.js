@@ -1,5 +1,5 @@
 export const checkResult = (call, answer) => {
-    var results = {callId: call.id, response: null, dxCode: null, score: 0}
+    var results = {callId: call.id, response: null, dxCode: null, score: 0, time: answer.time}
     if (call.result.response === answer.response) {
         results.score = results.score += 5
         results.response = "correct"
