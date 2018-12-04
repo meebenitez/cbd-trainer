@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Timer from '../timer/Timer'
-const prettyMs = require('pretty-ms');
-
 
 class Call extends Component {
 

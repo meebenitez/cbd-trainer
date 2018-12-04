@@ -43,6 +43,14 @@ input[type=text]{
   font-size: 2em;
 }
 
+.disabled {
+  background-color : #111111;
+}
+
+.disabled input{
+  background-color : #111111;
+}
+
 .input-holder {
   padding: 0px;
 }

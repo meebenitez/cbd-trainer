@@ -15,9 +15,9 @@ export const incrementCall = () => {
 }
 
 export const updateScore = (results) => {
-    return (dispatch) => {
-        dispatch({type: 'UPDATE_SCORE', results: results})
+    return (dispatch, getState) => {
         dispatch(stopTimer())
+        dispatch({type: 'UPDATE_SCORE', results: results})
     }
 }
 
@@ -30,15 +30,28 @@ export const setPageImg = (page) => {
 
 let timer = null;
 
+export const endGame = () => {
+    debugger;
+}
 
 export const startTimer = () => {
     return (dispatch) => {
+        let counter = 0
         clearInterval(timer); 
-        timer = setInterval(() => dispatch(tick()), 1000);
+        timer = setInterval(() => {
+            counter += 1
+            if (counter <= 180) {
+                dispatch(tick())
+            } else (
+                clearInterval(timer)
+            )
+        }, 1000);
+        
         dispatch({type: 'START_TIMER'})
         dispatch(tick())
     }
-  }
+}
+
 
 
 const tick = () => {

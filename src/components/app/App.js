@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Select from 'react-select';
 import { pages } from '../../data/data'
 import { checkResult } from '../../helpers/gamehelpers'
-import Timer from './timer/Timer'
 import Call from './call/Call'
 
 
@@ -158,11 +157,14 @@ handleEnter = (event) => {
                   <form>
                     <div className="input-holder mt-4">
                       <h2>RESPONSE:</h2>
-                      <input type="text" name="level" value={this.state.response} onChange={this.handleResponse} style={{ textTransform: 'uppercase' }} ref={(input) => { this.levelInput = input; }} />
+                        <select name="level" value={this.state.response} disabled={!this.props.timeOn ? "disabled" : ""} onChange={this.handleResponse} ref={(input) => { this.levelInput = input; }}>
+                          <option value="ALS">ALS</option>
+                          <option value="BLS">BLS</option>
+                        </select>  
                     </div>
                     <div className="input-holder mt-4">
                       <h2>DX CODE:</h2>
-                      <input type="text" name="dxCode" value={this.state.dxCode} onChange={this.handleDxCode} style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
+                      <input type="text" name="dxCode" disabled={!this.props.timeOn ? "disabled" : ""} value={this.state.dxCode} onChange={this.handleDxCode} style={{ textTransform: 'uppercase' }} ref={(input) => { this.dxCodeInput = input; }} />
                     </div>
                     <div>
                       <button type="submit" onClick={this.handleSubmit}>Dispatch (RETURN)</button>
@@ -213,7 +215,8 @@ const mapStateToProps= state => {
     callNum: state.game.callNum,
     time: state.game.time,
     start: state.game.start,
-    timeOn: state.game.timeOn
+    timeOn: state.game.timeOn,
+    callLimit: state.game.callLimit
   };
 }
 

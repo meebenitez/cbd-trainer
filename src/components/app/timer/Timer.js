@@ -43,19 +43,13 @@ class Timer extends Component {
       
       render() {
 
-        const start = (this.props.time === 0 && !this.props.timeOn) ?
+        const start = (this.props.time === 0 && !this.props.timeOn && this.props.callNum < this.props.callLimit) ?
           <button onClick={this.props.startTimer}>{this.props.callNum === 0 ? 'Answer Call (N)' : 'Answer Next Call (N)'}</button> : null;
-        const stop = (this.props.timeOn) ?
-          <button onClick={this.props.stopTimer}>Stop</button> : null
-        const resume = (this.state.time !== 0 && !this.props.timeOn) ?
-          <button onClick={this.props.startTimer}>Resume</button> : null
-    
-    
+        
         return (
           <div className="col-12">
             {start}
             {!this.props.timeOn ? null : <h3>Time to Dispatch: {prettyMs(this.props.time)}</h3>}
-            {stop}
             </div>
     
         )}
