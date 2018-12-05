@@ -10,10 +10,6 @@ class Timer extends Component {
         }
     }
 
-
-
-      
-
       
       render() {
 

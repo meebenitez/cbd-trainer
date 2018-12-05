@@ -1,10 +1,11 @@
+import { findAvgTime } from '../helpers/gamehelpers'
 import { calls } from '../data/data'
 import { callShuffle } from '../helpers/gamehelpers'
 
 
 export const loadCalls = () => {
-    return (dispatch) => {
-        dispatch({type: 'CREATE_CALLS', calls: callShuffle(calls).slice(0,7)})
+    return (dispatch, getState) => {
+        dispatch({type: 'CREATE_CALLS', calls: callShuffle(calls).slice(0,getState().game.callLimit + 1)})
     }
 }
 
@@ -24,8 +25,18 @@ export const updateScore = (results) => {
     return (dispatch, getState) => {
         dispatch(stopTimer())
         dispatch({type: 'UPDATE_SCORE', results: results})
+        let avgTimeInfo = null;
+        let bestTime = null;
+        if (getState().game.callHistory.filter(call => call.responseResult === "correct").length > 0){
+            bestTime = getState().game.callHistory.filter(call => call.responseResult === "correct").map(call => call.time).sort()[0]
+        }
+        if (getState().game.callHistory.filter(call => call.responseResult === "correct").length > 1) {
+            avgTimeInfo = findAvgTime(getState().game.callHistory)
+        }
+        dispatch({type: 'UPDATE_TIMES', avgTimeInfo: avgTimeInfo, bestTime: bestTime})
     }
 }
+
 
 export const setPageImg = (page) => {
     return (dispatch) => {
@@ -37,12 +48,13 @@ export const setPageImg = (page) => {
 let timer = null;
 
 export const endGame = () => {
+    //TBD
     debugger;
 }
 
 export const startTimer = () => {
     return (dispatch) => {
-        let counter = 0
+        //let counter = 0
         clearInterval(timer); 
         timer = setInterval(() => {
             //counter += 1

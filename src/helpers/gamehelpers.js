@@ -62,7 +62,6 @@ export const callShuffle = (array) => {
 export const findAvgTime = (calls) => {
     var response = {avg: null, color: null, rating: null };
     const correctCalls = calls.filter(call => call.responseResult === "correct");
-    //const correctCalls = calls.filter(call => call.)
     if (correctCalls) {
         response.avg = Math.round(correctCalls.map(call => call.time).reduce((total, sum) => total + sum, 0) / correctCalls.length);
         if (response.avg <= 15000) {

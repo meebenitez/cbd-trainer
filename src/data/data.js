@@ -43,7 +43,7 @@ export const calls = [
     },
     { 
         id: 3,
-        details: ["28 y/o F", "36 weeks pregnant", "At home and started contractions", "Contractions are 3-4 minutes apart", "First pregnancy", "Says nearest hospital is 1 hr minutes away"], 
+        details: ["28 y/o F", "36 weeks pregnant", "At home and started contractions", "Contractions are 3-4 minutes apart", "First pregnancy"], 
         result: {response: "BLS", codes: ["15R2"]},
         pages:["Pregnancy / Childbirth / Gyn"]
     },

@@ -7,12 +7,13 @@ const initialState = {
     timeLeft: 0,
     inProgress: false,
     score: 0,
-    avgTime: 0,
     time: 0,
     start: 0,
     timeOn: false,
     callLimit: 9,
     lastCall: {},
+    avgTimeInfo: null,
+    bestTime: null,
 }
 
 
@@ -35,6 +36,12 @@ const gamereducer = (state = initialState, action) => {
             callHistory: [...state.callHistory, action.results],
             time: 0,
         }
+        case 'UPDATE_TIMES':
+        return {
+            ...state,
+            avgTimeInfo: action.avgTimeInfo,
+            bestTime: action.bestTime
+        }
         case 'TOGGLE_CALL_READY':
         return {
             ...state,
@@ -43,7 +50,6 @@ const gamereducer = (state = initialState, action) => {
         case 'START_TIMER':
         return {
             ...state,
-            time: state.time,
             start: Date.now() - state.time,
             timeOn: true,
             time: 0
@@ -54,16 +60,11 @@ const gamereducer = (state = initialState, action) => {
             time: Date.now() - state.start
         }
         case 'STOP_TIMER':
-        var endGame = false
-        if (state.callNum === state.callLimit - 1) {
-            endGame = true
-        }
         return {
             ...state,
             timeOn: false,
             start: 0,
             callNum: state.callNum += 1,
-            endGame: endGame,
         }
         case 'UPDATE_LAST_CALL':
         return {

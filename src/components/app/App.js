@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import { pages } from '../../data/data'
-import { checkResult, findAvgTime } from '../../helpers/gamehelpers'
+import { checkResult } from '../../helpers/gamehelpers'
 import Call from './call/Call'
 import './App.css';
 import { connect } from 'react-redux';
@@ -134,34 +134,32 @@ sendSubmit = () => {
     });
 }
 
+
   render() {
-
-
-
     return (
       <div className="wrapper">
           <div className="row black-background">
-            <div className="col-4 pl-4 pt-2">
+            <div className="col-6 pl-4 pt-2">
               <h1>Criteria Based Dispatch</h1>
               <h2>Training Simulator</h2>
             </div>
-            <div className="col-8 mt-3 p-0">
+            <div className="col-6 mt-3 p-0">
               <div className="row score-box pt-2">
-                <div className="col-4">
-                  <span className="font-weight-bold">Best Dispatch Time:</span> {this.props.callHistory.length > 0 ? prettyMs(this.props.callHistory.map(call => call.time).sort()[0]) : null}  <br></br>
-                  <span className="font-weight-bold">Avg Dispatch Time:</span> {this.props.callHistory.filter(call => call.responseResult === "correct").length > 1 ? 
-                    <span className={findAvgTime(this.props.callHistory).color}>
-                      {prettyMs(findAvgTime(this.props.callHistory).avg)} - {findAvgTime(this.props.callHistory).rating}
+                <div className="col-6">
+                  <span className="font-weight-bold">Best Dispatch Time:</span> {this.props.bestTime ? prettyMs(this.props.bestTime) : null}  <br></br>
+                  <span className="font-weight-bold">Avg Dispatch Time:</span> {this.props.avgTimeInfo ? 
+                    <span className={this.props.avgTimeInfo.color}>
+                      {prettyMs(this.props.avgTimeInfo.avg)} - {this.props.avgTimeInfo.rating}
                     </span>: null}
                 </div>
-                <div className="col-4">
-                <span className="font-weight-bold">Total Score:</span> {this.props.score} / 105<br></br> 
-                <span className="font-weight-bold">Total Calls Complete:</span><br></br>
+                <div className="col-6">
+                <span className="font-weight-bold">Total Score:</span> {this.props.score} / {this.props.callLimit * 20}<br></br> 
+                <span className="font-weight-bold">Total Calls Complete: {this.props.callNum} / {this.props.calls.length - 1}</span><br></br>
                 </div>
               </div>
             </div>
           </div>
-          <div className="row wrapper">
+          <div className="row">
               <div className="col-5 game-background pl-4 pr-4 pt-2 pb-2">
                 <div className="col-12 call-container m-2">
                   <Call {...this.props} />
@@ -188,7 +186,7 @@ sendSubmit = () => {
               <div className="col-7 p-0 m-0">
                 <div><button onClick={this.toggleSearchButton}>Search Manual (ALT)</button></div>
                 <div>
-                  <img src={`img/pages/${this.props.savedPage}`} alt={this.props.savedPage} width="100%" height="100%"/>
+                  <img src={`img/pages/${this.props.savedPage}`} alt={this.props.savedPage} width="98%"/>
                 </div>
               </div>
           </div>
@@ -227,7 +225,9 @@ const mapStateToProps= state => {
     start: state.game.start,
     timeOn: state.game.timeOn,
     callLimit: state.game.callLimit,
-    lastCall: state.game.lastCall
+    lastCall: state.game.lastCall,
+    avgTimeInfo: state.game.avgTimeInfo,
+    bestTime: state.game.bestTime
   };
 }
 

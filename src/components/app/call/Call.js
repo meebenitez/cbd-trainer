@@ -21,7 +21,7 @@ class Call extends Component {
 
     renderResult = () => {
         
-        if (this.props.callHistory.length > 0 && this.props.lastCall) {
+        if (this.props.callHistory && this.props.callHistory.length > 0 && this.props.lastCall) {
             const result =  this.props.callHistory.filter((call) => {
                 return call.callId === this.props.lastCall.id;
             })[0]
@@ -68,7 +68,15 @@ class Call extends Component {
 
             }
         } else {
-            return null
+            return (
+                <div>
+                    <h3>Welcome to your CBD Training!</h3>
+                    <p>To begin, press the blue "Answer Call" button (or press SHFT + N) and a call will be loaded.</p>
+                    <p>Identify the correct response (ALS for "Advanced Life Support" or BLS for "Basic Life Support") in the dropdown below and then dispatch the call with the "Dispatch" button (or press SHFT + D).</p>
+                    <p>Your results will be timed, scored and available to view after each dispatch, and you will be able to start a new call whenever you see the blue button.</p>
+                    <h3>Good Luck!</h3>
+                </div>
+            )
         }
     }
 
