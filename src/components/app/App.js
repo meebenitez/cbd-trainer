@@ -44,7 +44,7 @@ componentWillUnmount(){
 }
 
 handleN = (event) => {
-  if (event.keyCode === 78 && !this.props.timeOn) {
+  if (event.shiftKey && event.keyCode === 78 && !this.props.timeOn) {
     event.preventDefault();
     this.props.startTimer()
     this.levelInput.focus()
@@ -91,31 +91,6 @@ handleSelect = (selection) => {
   this.levelInput.focus();
 }
 
-sendSubmit = () => {
-  this.props.updateScore(
-    checkResult(this.props.calls[this.props.callNum], 
-    {response: this.state.response, time: this.props.time}));
-  this.setState({
-      ...this.state,
-      response: ""
-    });
-}
-
-handleSubmit = (event) => {
-  event.preventDefault()
-  if (this.state.response === ""){
-    alert("No blank fields allowed!")
-  } else {
-    this.props.updateScore(
-      checkResult(this.props.calls[this.props.callNum], 
-      {response: this.state.response, time: this.props.time}));
-    this.setState({
-        ...this.state,
-        response: ""
-      });
-  }
-}
-
 
 
 handleTab = (event) => {
@@ -128,11 +103,35 @@ handleTab = (event) => {
 }
 
 
-handleD = (event) => {
-  if (event.keyCode === 68 && event.shiftKey === true && !this.state.manual) {
-    event.preventDefault();
+handleSubmit = (event) => {
+  event.preventDefault()
+  if (this.state.response === ""){
+    alert("No blank fields allowed!")
+  } else {
     this.sendSubmit();
   }
+}
+
+
+handleD = (event) => {
+  if (event.keyCode === 68 && event.shiftKey && !this.state.manual) {
+    event.preventDefault();
+    if (this.state.response === ""){
+      alert("No blank fields allowed!")
+    } else {
+      this.sendSubmit();
+    }
+  }
+}
+
+sendSubmit = () => {
+  this.props.updateScore(
+    checkResult(this.props.calls[this.props.callNum], 
+    {response: this.state.response, time: this.props.time}));
+  this.setState({
+      ...this.state,
+      response: ""
+    });
 }
 
   render() {
@@ -161,7 +160,7 @@ handleD = (event) => {
                 </div> 
                 <div className="col-12 mb-4">
                   <form>
-                    <div className="input-holder mt-5">
+                    <div className="input-holder mt-2">
                         <span className={!this.props.timeOn ? "disabled" : ""}><h2>RESPONSE:</h2></span>
                         <select name="level" className="level-dropdown" value={this.state.response} disabled={!this.props.timeOn ? "disabled" : ""} onChange={this.handleResponse} ref={(input) => { this.levelInput = input; }}>
                         <option value="">Choose Response</option>
