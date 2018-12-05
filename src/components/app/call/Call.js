@@ -28,7 +28,7 @@ class Call extends Component {
             if (result) {
                 return (
                     <div>
-                        <h2>Call {this.props.callNum} / {this.props.calls.length}</h2>
+                        <h2>Call #{this.props.callNum}</h2>
                         <ul>
                             {this.renderCall(this.props.lastCall)}
                         </ul>
@@ -76,19 +76,26 @@ class Call extends Component {
       
     render() {  
         return (
-            <div>
+            <div className="mt-3">
                 {!this.props.timeOn ? 
                     this.renderResult() : 
                     <div>
-                        <h2>Call {this.props.callNum + 1} / {this.props.calls.length}</h2>
+                        <h2>Call #{this.props.callNum + 1}</h2>
                         <ul>
                             {this.renderCall()}
                         </ul>
+                        <div>
+                            {!this.props.timeOn ? null : 
+                                <div className="timer p-0 mb-2">
+                                    <div className="timer-label">
+                                        TIME TO DISPATCH 
+                                    </div>
+                                    <div className="timer-numbers">
+                                        {prettyMs(this.props.time)}
+                                    </div>
+                                </div>}
+                        </div>
                     </div> }
-                <div>
-                {!this.props.timeOn ? null : 
-                    <div className="timer">Time to Dispatch: {prettyMs(this.props.time)}</div>}
-                </div>
             </div>  
         )
     }

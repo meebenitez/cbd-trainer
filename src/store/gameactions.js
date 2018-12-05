@@ -45,13 +45,13 @@ export const startTimer = () => {
         let counter = 0
         clearInterval(timer); 
         timer = setInterval(() => {
-            counter += 1
-            if (counter <= 180) {
+            //counter += 1
+            //if (counter <= 180) {
                 dispatch(tick())
-            } else (
-                clearInterval(timer)
-            )
-        }, 1000);
+            //} else (
+              //  clearInterval(timer)
+            //)
+        }, 1);
         dispatch(updateLastCall())
         dispatch({type: 'START_TIMER'})
         dispatch(tick())

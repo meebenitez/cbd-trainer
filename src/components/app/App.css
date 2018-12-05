@@ -31,9 +31,16 @@
   padding-left: 10px;
 }
 .timer{
-  font-size: 1.5em;
+  height: 100px;
   font-weight: bold;
-  color: orange;
+  color: black;
+  text-align: right;
+}
+.timer-label{
+  font-size: 1em;
+}
+.timer-numbers{
+  font-size: 4em;
 }
 .points{
   font-style: italic;
@@ -48,20 +55,33 @@
   right: 0;
   bottom: 0;
   margin: auto;
-  background-color: rgba(0,0,0, 0.75);
+  background-color: rgba(0,0,0, 0.65);
   z-index: 999;
 }
 .popup-inner {
   position: absolute;
   padding: 20px;
-  left: 15%;
-  right: 15%;
+  left: 50%;
+  right: 10%;
   top: 35%;
   bottom: 45%;
   margin: auto;
   background: white;
   border-radius: 5px;
   z-index: 1500;
+}
+
+.red{
+  color: red;
+}
+.green{
+  color: green;
+}
+.yellow{
+  color: yellow;
+}
+.orange{
+  color: orange;
 }
 
 input[type=text]{

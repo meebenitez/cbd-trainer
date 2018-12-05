@@ -11,7 +11,7 @@ const initialState = {
     time: 0,
     start: 0,
     timeOn: false,
-    callLimit: 5,
+    callLimit: 9,
     lastCall: {},
 }
 
@@ -45,7 +45,8 @@ const gamereducer = (state = initialState, action) => {
             ...state,
             time: state.time,
             start: Date.now() - state.time,
-            timeOn: true
+            timeOn: true,
+            time: 0
         }
         case 'RUN_TIMER':
         return {
@@ -54,7 +55,7 @@ const gamereducer = (state = initialState, action) => {
         }
         case 'STOP_TIMER':
         var endGame = false
-        if (state.callNum === 3) {
+        if (state.callNum === state.callLimit - 1) {
             endGame = true
         }
         return {
@@ -62,7 +63,7 @@ const gamereducer = (state = initialState, action) => {
             timeOn: false,
             start: 0,
             callNum: state.callNum += 1,
-            endGame: endGame
+            endGame: endGame,
         }
         case 'UPDATE_LAST_CALL':
         return {

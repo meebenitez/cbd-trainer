@@ -16,28 +16,28 @@ export const checkResult = (call, answer) => {
         results.responsePoints = 10;
         results.score = results.score += 10;
         results.responseResult = "correct";
-        results.responseColor = "green"
+        results.responseColor = "green";
     } else {
         results.responsePoints = 0;
         results.responseResult = "wrong";
-        results.responseColor = "red"
+        results.responseColor = "red";
     }
     if (results.responseResult === "correct") {
         if (answer.time <= 15000) {
-            results.timeResult = "Good"
+            results.timeResult = "Good";
             results.timePoints = 10;
             results.score = results.score += 10;
             results.timeColor = "green"
         } else if (answer.time <= 25000) {
-            results.timeResult = "Fair"
+            results.timeResult = "Fair";
             results.timePoints = 5;
             results.score = results.score += 5;
-            results.timeColor="yellow"
+            results.timeColor="yellow";
         } else {
             results.timeResult = "Bad"
             results.timePoints = 0;
             results.timePoints = 5;
-            results.timeColor="red"
+            results.timeColor="red";
         }
     }
     return results
@@ -60,6 +60,22 @@ export const callShuffle = (array) => {
 }
 
 export const findAvgTime = (calls) => {
-    return Math.round(calls.map(call => call.time).reduce((total, sum) => total + sum, 0) / calls.length)
+    var response = {avg: null, color: null, rating: null };
+    const correctCalls = calls.filter(call => call.responseResult === "correct");
+    //const correctCalls = calls.filter(call => call.)
+    if (correctCalls) {
+        response.avg = Math.round(correctCalls.map(call => call.time).reduce((total, sum) => total + sum, 0) / correctCalls.length);
+        if (response.avg <= 15000) {
+            response.color = "green";
+            response.rating = "Good";
+        } else if (response.avg <= 25000) {
+            response.color = "yellow";
+            response.rating = "Fair";
+        } else {
+            response.color = "red";
+            response.rating = "Bad";
+        }
+    }
+    return response;
 }
 

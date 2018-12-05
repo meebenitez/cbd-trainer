@@ -141,15 +141,23 @@ sendSubmit = () => {
     return (
       <div className="wrapper">
           <div className="row black-background">
-            <div className="col-7 pl-4 pt-2">
+            <div className="col-4 pl-4 pt-2">
               <h1>Criteria Based Dispatch</h1>
               <h2>Training Simulator</h2>
             </div>
-            <div className="col-5 mt-3">
-              <div className="col-12 score-box">
-                Total Score: {this.props.score} / 105<br></br>  
-                Best Dispatch Time: {this.props.callHistory.length > 0 ? prettyMs(this.props.callHistory.map(call => call.time).sort()[0]) : null}  <br></br>
-                Avg Dispatch Time: {this.props.callHistory.length > 1 ? prettyMs(findAvgTime(this.props.callHistory)) : null}
+            <div className="col-8 mt-3 p-0">
+              <div className="row score-box pt-2">
+                <div className="col-4">
+                  <span className="font-weight-bold">Best Dispatch Time:</span> {this.props.callHistory.length > 0 ? prettyMs(this.props.callHistory.map(call => call.time).sort()[0]) : null}  <br></br>
+                  <span className="font-weight-bold">Avg Dispatch Time:</span> {this.props.callHistory.filter(call => call.responseResult === "correct").length > 1 ? 
+                    <span className={findAvgTime(this.props.callHistory).color}>
+                      {prettyMs(findAvgTime(this.props.callHistory).avg)} - {findAvgTime(this.props.callHistory).rating}
+                    </span>: null}
+                </div>
+                <div className="col-4">
+                <span className="font-weight-bold">Total Score:</span> {this.props.score} / 105<br></br> 
+                <span className="font-weight-bold">Total Calls Complete:</span><br></br>
+                </div>
               </div>
             </div>
           </div>

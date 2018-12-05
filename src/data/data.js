@@ -38,7 +38,7 @@ export const calls = [
     { 
         id: 2,
         details: ["38 y/o F", "Nauseau and vomitting", "headache", "describes headache as the worst one of her life"], 
-        result: {response: "BLS", codes: ["12M7"]},
+        result: {response: "ALS", codes: ["12M7"]},
         pages:["Head / Neck"]
     },
     { 
